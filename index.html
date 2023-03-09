@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bubble Sort</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="../assets/styles.css" />
     <link rel="stylesheet" href="../assets/big ugly.css" />
+
 </head>
 
 <body>
@@ -21,14 +23,19 @@
         <p class="waitSpeedLabel">Wait Speed: <i id="waitSpeedNumber"></i> sec</p>
         <input type="range" min="0" max="2000" value="2" class="slider" id="waitSpeedSlider"
             oninput="handleSpeedChange()" />
+
+
+        <p class="waitSpeedLabel">List Length: <i id="listLength"></i></p>
+        <input type="range" min="2" max="100" value="20" class="slider" id="listLengthSlider"
+            oninput="handleSpeedChange()" />
     </div>
     <div class="grid-container">
-        <div class="grid-child">
+        <div class=" grid-child">
             <h2>Iterative</h2>
             <canvas id="iterationCanvas" height="400" width="500"> </canvas>
             <ul id="iteration"></ul>
         </div>
-        <div class="grid-child">
+        <div class=" grid-child">
             <h2>Recursive</h2>
             <canvas id="recursiveCanvas" height="400" width="500"> </canvas>
             <ul id="recursive"></ul>

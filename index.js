@@ -1,4 +1,4 @@
-var maxNumber = 25;
+var maxNumber = 50;
 var numberList = createNumbersList(maxNumber);
 var randomList = [];
 var bubbleWL = [];
@@ -14,6 +14,8 @@ const iterationCanvas = document.getElementById("iterationCanvas");
 
 const waitSpeedSlider = document.getElementById("waitSpeedSlider");
 const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
+const listLength = document.getElementById("listLength");
+const listLengthSlider = document.getElementById("listLengthSlider");
 
 window.onload = handleSpeedChange;
 
@@ -25,9 +27,7 @@ async function bubbleSort(arr, n) {
     var i, j;
     // Loop over the length of the array.
     for (i = 0; i < n - 1; i++) {
-        writeIteration(
-            `Iteration ${i + 1}: ${arr} ${isSorted(arr) ? "✔️" : "❌"}`
-        );
+        writeIteration(i + 1, arr);
         // drawArray(iterationCanvas, arr);
         await sleep(waitTime);
         // For each iteration loop until the selected item is in the right spot.
@@ -57,11 +57,7 @@ async function recursiveBubbleSort(arr, n) {
     // is moved (or bubbled)
     // to end.
     recursiveIteration++;
-    writeRecursive(
-        `Iteration ${recursiveIteration}: ${arr}  ${
-            isSorted(arr) ? "✔️" : "❌"
-        }`
-    );
+    writeRecursive(recursiveIteration, arr);
 
     for (var i = 0; i < n - 1; i++) {
         if (arr[i] > arr[i + 1]) {
@@ -89,6 +85,9 @@ function handleSpeedChange() {
     console.log(waitSpeedSlider.value);
     waitTime = waitSpeedSlider.value;
     waitSpeedSliderLabel.innerHTML = waitSpeedSlider.value / 1000;
+
+    maxNumber = listLengthSlider.value;
+    listLength.innerHTML = maxNumber;
 }
 
 /**
@@ -124,19 +123,30 @@ function drawArray(canvas, arr, selectedIndex) {
 function isSorted(arr) {
     for (let i = 1; i < arr.length; i++) {
         if (arr[i] < arr[i - 1]) {
-            return false;
+            return "❌";
         }
     }
-    return true;
+    return "✔️";
 }
 
 /**
  * Appends a item to the Recursive HTML list.
  * @param {string} text
  */
-function writeRecursive(text) {
+function writeRecursive(iteration, arr) {
     let newLIne = document.createElement("li");
-    newLIne.innerHTML = `${text}`;
+    // newLIne.innerHTML = `${text}`;
+
+    let iterationLabel = document.createElement("p");
+    iterationLabel.innerHTML = `Iteration: ${iteration} Passing: ${isSorted(
+        arr
+    )}`;
+
+    let arrayContent = document.createElement("p");
+    arrayContent.innerHTML = `Array: ${arr}`;
+
+    newLIne.appendChild(iterationLabel);
+    newLIne.appendChild(arrayContent);
 
     recursiveOutput.appendChild(newLIne);
 }
@@ -145,10 +155,20 @@ function writeRecursive(text) {
  * Appends a item to the Iteration HTML list.
  * @param {string} text
  */
-function writeIteration(text) {
+function writeIteration(iteration, arr) {
     let newLIne = document.createElement("li");
-    newLIne.innerHTML = `${text}`;
+    // newLIne.innerHTML = `${text}`;
 
+    let iterationLabel = document.createElement("p");
+    iterationLabel.innerHTML = `Iteration: ${iteration} Passing: ${isSorted(
+        arr
+    )}`;
+
+    let arrayContent = document.createElement("p");
+    arrayContent.innerHTML = `Array: ${arr}`;
+
+    newLIne.appendChild(iterationLabel);
+    newLIne.appendChild(arrayContent);
     iterationOutput.appendChild(newLIne);
 }
 
@@ -238,6 +258,7 @@ async function run() {
 }
 
 function readySorts() {
+    numberList = createNumbersList(maxNumber);
     randomList = shuffle(numberList);
     bubbleWL = [...randomList];
     recursiveBubbleWL = [...randomList];

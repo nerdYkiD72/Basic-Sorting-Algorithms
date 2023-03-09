@@ -1,15 +1,41 @@
 h1,
 h2 {
     text-align: center;
+    font-size: 24px;
+}
+
+h2 {
+    color: white;
+    font-size: 18px;
 }
 
 ul {
     list-style: none;
+    max-width: inherit;
 }
 
 canvas {
     background-color: white;
-    margin: 1rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    display: block;
+    /* width: 800px; */
+}
+
+p {
+    margin: 0;
+}
+
+li {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    max-width: inherit;
+    color: white;
 }
 
 .waitSpeedLabel {
@@ -24,11 +50,19 @@ canvas {
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+    margin: 1vw;
+    
 }
 
 .grid-child {
-    background-color: aquamarine;
-    border: 1px red solid;
-    margin: 1rem;
+    background-color: rgb(67, 67, 67);
+    border-radius: 2rem;
+    margin: auto;
+    margin-top: 1vh;
+    padding: 1rem;
+    
+    word-wrap: break-word;
+    width: 600px;
 }
 
