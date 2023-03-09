@@ -27,9 +27,8 @@ async function bubbleSort(arr, n) {
     var i, j;
     // Loop over the length of the array.
     for (i = 0; i < n - 1; i++) {
-        writeIteration(i + 1, arr);
-        // drawArray(iterationCanvas, arr);
-        await sleep(waitTime);
+        writeIteration(i + 1, arr); // Prints the current state of the list
+        await sleep(waitTime); // Waits to let you see progress
         // For each iteration loop until the selected item is in the right spot.
         for (j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
