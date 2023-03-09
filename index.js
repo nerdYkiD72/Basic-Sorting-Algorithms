@@ -1,6 +1,5 @@
-var numberList = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-];
+var maxNumber = 25;
+var numberList = createNumbersList(maxNumber);
 var randomList = [];
 var bubbleWL = [];
 var recursiveBubbleWL = [];
@@ -15,6 +14,8 @@ const iterationCanvas = document.getElementById("iterationCanvas");
 
 const waitSpeedSlider = document.getElementById("waitSpeedSlider");
 const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
+
+window.onload = handleSpeedChange;
 
 // *****************************
 // *** Iteration Bubble Sort ***
@@ -103,10 +104,10 @@ function drawArray(canvas, arr, selectedIndex) {
             return;
         }
 
-        let barWidth = 10;
-        let scale = 19;
         let height = canvas.height;
         let width = canvas.width;
+        let barWidth = 10;
+        let scale = (height - 10) / maxNumber;
         let x = width / arr.length;
 
         ctx.fillStyle = i == selectedIndex ? "#3477eb" : "#F9DC5C";
@@ -216,6 +217,15 @@ function sleep(ms) {
     if (ms > 0) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
+}
+
+function createNumbersList(max) {
+    let arr = [];
+
+    for (let i = 0; i < max; i++) {
+        arr.push(i + 1);
+    }
+    return arr;
 }
 
 // ***************
