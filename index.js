@@ -13,6 +13,9 @@ const recursiveOutput = document.getElementById("recursive");
 const recursiveCanvas = document.getElementById("recursiveCanvas");
 const iterationCanvas = document.getElementById("iterationCanvas");
 
+const waitSpeedSlider = document.getElementById("waitSpeedSlider");
+const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
+
 // *****************************
 // *** Iteration Bubble Sort ***
 // *****************************
@@ -80,6 +83,12 @@ async function recursiveBubbleSort(arr, n) {
 // ***************
 // *** Helpers ***
 // ***************
+
+function handleSpeedChange() {
+    console.log(waitSpeedSlider.value);
+    waitTime = waitSpeedSlider.value;
+    waitSpeedSliderLabel.innerHTML = waitSpeedSlider.value / 1000;
+}
 
 /**
  * Handles drawing arrays to their intended canvases.
@@ -204,7 +213,9 @@ function randomizeList(list) {
  * @returns A promise that resolves after the sleep time.
  */
 function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    if (ms > 0) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
 }
 
 // ***************

@@ -12,6 +12,10 @@ canvas {
     margin: 1rem;
 }
 
+.waitSpeedLabel {
+    margin: 1rem;
+}
+
 
 .toolbar {
     text-align: center;
@@ -27,3 +31,4 @@ canvas {
     border: 1px red solid;
     margin: 1rem;
 }
+

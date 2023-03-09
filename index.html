@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bubble Sort</title>
-    <link rel="stylesheet" href="../assets/styles.css">
-    <link rel="stylesheet" href="../assets/big ugly.css">
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link rel="stylesheet" href="../assets/big ugly.css" />
 </head>
+
 <body>
     <h1>Bubble Sorting</h1>
     <div class="toolbar">
@@ -15,22 +17,25 @@
         <button onclick="readySorts()">Mix</button>
         <button onclick="runSorts()">Sort</button>
     </div>
+    <div class="slidecontainer">
+        <p class="waitSpeedLabel">Wait Speed: <i id="waitSpeedNumber">0.1</i> sec</p>
+        <input type="range" min="0" max="2000" value="100" class="slider" id="waitSpeedSlider"
+            oninput="handleSpeedChange()" />
+    </div>
     <div class="grid-container">
         <div class="grid-child">
             <h2>Iterative</h2>
-            <canvas id="iterationCanvas" height="400" width="500">
-            </canvas>
+            <canvas id="iterationCanvas" height="400" width="500"> </canvas>
             <ul id="iteration"></ul>
         </div>
         <div class="grid-child">
             <h2>Recursive</h2>
-            <canvas id="recursiveCanvas" height="400" width="500">
-            </canvas>
+            <canvas id="recursiveCanvas" height="400" width="500"> </canvas>
             <ul id="recursive"></ul>
         </div>
     </div>
-    
-    
+
     <script type="text/javascript" src="index.js"></script>
 </body>
+
 </html>
