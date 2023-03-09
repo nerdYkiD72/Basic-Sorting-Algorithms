@@ -3,19 +3,25 @@ var numberList = [
 ];
 var randomList = randomizeList(numberList);
 var originalList = [...randomList];
-const console_Element = document.getElementById("console");
 var sortType = "recursive";
+var waitTime = 0;
+
+const iterationOutput = document.getElementById("iteration");
+const recursiveOutput = document.getElementById("recursive");
 
 window.onload = () => {
     // poo poo pee pee
 };
 
 //Bubble sort:
+
 async function bubbleSort(arr, n) {
     var i, j;
     for (i = 0; i < n - 1; i++) {
-        write(`Iteration ${i + 1}: ${randomList}`);
-        await sleep(1000);
+        writeIteration(
+            `Iteration ${i + 1}: ${randomList} ${isSorted(arr) ? "✔️" : "❌"}`
+        );
+        await sleep(waitTime);
         for (j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 swap(arr, j, j + 1);
@@ -24,8 +30,9 @@ async function bubbleSort(arr, n) {
     }
 }
 
-var recursiveIteration = 0;
 // Recursive bubble sort:
+
+var recursiveIteration = 0;
 async function recursiveBubbleSort(arr, n) {
     // Length of 1:
     if (n == 1) return;
@@ -37,14 +44,15 @@ async function recursiveBubbleSort(arr, n) {
     // is moved (or bubbled)
     // to end.
     recursiveIteration++;
-    write(`Iteration ${recursiveIteration}: ${randomList}`);
-    await sleep(1000);
+    writeRecursive(
+        `Iteration ${recursiveIteration}: ${randomList}  ${
+            isSorted(arr) ? "✔️" : "❌"
+        }`
+    );
+    await sleep(waitTime);
     for (var i = 0; i < n - 1; i++) {
         if (arr[i] > arr[i + 1]) {
-            // swap arr[i], arr[i+1]
-            var temp = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = temp;
+            swap(arr, i, i + 1);
             count++;
         }
     }
@@ -59,25 +67,54 @@ async function recursiveBubbleSort(arr, n) {
 }
 
 async function run() {
-    if (sortType == "recursive") {
-        write("Using recursive sorting");
-        recursiveBubbleSort(randomList, randomList.length);
-    } else if (sortType == "normal") {
-        write("Using recursive sorting");
-        bubbleSort(randomList, randomList.length);
-    }
-    write(`Original list was: ${originalList}`);
+    // if (sortType == "recursive") {
+    //     writeRecursive("Using recursive sorting");
+    //     recursiveBubbleSort(randomList, randomList.length);
+    // } else if (sortType == "normal") {
+    //     writeIteration("Using recursive sorting");
+    //     bubbleSort(randomList, randomList.length);
+    // }
+    // write(`Original list was: ${originalList}`);
+
+    writeIteration("Using recursive sorting");
+    bubbleSort(randomList, randomList.length);
+
+    writeRecursive("Using recursive sorting");
+    recursiveBubbleSort(randomList, randomList.length);
+
+    // Just write the final result
+    writeRecursive(
+        `Iteration ${recursiveIteration}: ${randomList}  ${
+            isSorted(arr) ? "Sorted" : "Mixed"
+        }`
+    );
 }
 
 run();
 
 // Helpers:
 
-function write(text) {
+function isSorted(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] < arr[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function writeRecursive(text) {
     let newLIne = document.createElement("li");
     newLIne.innerHTML = `${text}`;
 
-    console_Element.appendChild(newLIne);
+    recursiveOutput.appendChild(newLIne);
+}
+
+function writeIteration(text) {
+    let newLIne = document.createElement("li");
+    newLIne.innerHTML = `${text}`;
+
+    iterationOutput.appendChild(newLIne);
 }
 
 function swap(arr, xp, yp) {
