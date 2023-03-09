@@ -2,9 +2,11 @@ var numberList = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ];
 var randomList = randomizeList(numberList);
+var bubbleWL = [...randomList];
+var recursiveBubbleWL = [...randomList];
 var originalList = [...randomList];
-var sortType = "recursive";
-var waitTime = 0;
+
+var waitTime = 500;
 
 const iterationOutput = document.getElementById("iteration");
 const recursiveOutput = document.getElementById("recursive");
@@ -19,7 +21,7 @@ async function bubbleSort(arr, n) {
     var i, j;
     for (i = 0; i < n - 1; i++) {
         writeIteration(
-            `Iteration ${i + 1}: ${randomList} ${isSorted(arr) ? "✔️" : "❌"}`
+            `Iteration ${i + 1}: ${arr} ${isSorted(arr) ? "✔️" : "❌"}`
         );
         await sleep(waitTime);
         for (j = 0; j < n - i - 1; j++) {
@@ -45,7 +47,7 @@ async function recursiveBubbleSort(arr, n) {
     // to end.
     recursiveIteration++;
     writeRecursive(
-        `Iteration ${recursiveIteration}: ${randomList}  ${
+        `Iteration ${recursiveIteration}: ${arr}  ${
             isSorted(arr) ? "✔️" : "❌"
         }`
     );
@@ -76,11 +78,11 @@ async function run() {
     // }
     // write(`Original list was: ${originalList}`);
 
-    writeIteration("Using recursive sorting");
-    bubbleSort(randomList, randomList.length);
+    writeIteration("Using iterative sorting");
+    bubbleSort(bubbleWL, bubbleWL.length);
 
     writeRecursive("Using recursive sorting");
-    recursiveBubbleSort(randomList, randomList.length);
+    recursiveBubbleSort(recursiveBubbleWL, recursiveBubbleWL.length);
 
     // Just write the final result
     writeRecursive(
