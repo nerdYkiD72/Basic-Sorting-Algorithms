@@ -3,6 +3,7 @@ var numberList = createNumbersList(maxNumber);
 var randomList = [];
 var bubbleWL = [];
 var recursiveBubbleWL = [];
+var quickSortList = [];
 var originalList = [];
 
 var waitTime = 100;
@@ -11,6 +12,8 @@ const iterationOutput = document.getElementById("iteration");
 const recursiveOutput = document.getElementById("recursive");
 const recursiveCanvas = document.getElementById("recursiveCanvas");
 const iterationCanvas = document.getElementById("iterationCanvas");
+const quickSortCanvas = document.getElementById("quickSortCanvas");
+const quickSortOutput = document.getElementById("quickSort");
 
 const waitSpeedSlider = document.getElementById("waitSpeedSlider");
 const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
@@ -76,6 +79,31 @@ async function recursiveBubbleSort(arr, n) {
     recursiveBubbleSort(arr, n - 1);
 }
 
+// Quick Sort:
+var quickSortIteration = 0;
+function quickSort(array) {
+    quickSortIteration++;
+    displayArrayUpdate(quickSortIteration, quickSortList, quickSortOutput);
+
+    // Sorting:
+    if (array.length <= 1) {
+        return array;
+    } else {
+        var pivot = array[0];
+        var left = [];
+        var right = [];
+        for (var i = 1; i < array.length; i++) {
+            if (array[i] < pivot) {
+                left.push(array[i]);
+            } else {
+                right.push(array[i]);
+            }
+            // drawArray(quickSortCanvas, quickSortList, i + 1);
+        }
+        return quickSort(left).concat(pivot, quickSort(right));
+    }
+}
+
 // ***************
 // *** Helpers ***
 // ***************
@@ -131,32 +159,29 @@ function isSorted(arr) {
 /**
  * Appends a item to the Recursive HTML list.
  * @param {string} text
+ * @deprecated Switch to use of displayArrayUpdate instead.
  */
 function writeRecursive(iteration, arr) {
-    let newLIne = document.createElement("li");
-    // newLIne.innerHTML = `${text}`;
-
-    let iterationLabel = document.createElement("p");
-    iterationLabel.innerHTML = `Iteration: ${iteration} Passing: ${isSorted(
-        arr
-    )}`;
-
-    let arrayContent = document.createElement("p");
-    arrayContent.innerHTML = `Array: ${arr}`;
-
-    newLIne.appendChild(iterationLabel);
-    newLIne.appendChild(arrayContent);
-
-    recursiveOutput.appendChild(newLIne);
+    displayArrayUpdate(iteration, arr, recursiveOutput);
 }
 
 /**
  * Appends a item to the Iteration HTML list.
  * @param {string} text
+ * @deprecated Switch to use of displayArrayUpdate instead.
  */
 function writeIteration(iteration, arr) {
+    displayArrayUpdate(iteration, arr, iterationOutput);
+}
+
+/**
+ * Displays the iteration of the array in the UI.
+ * @param {Number} iteration The iteration the algorithm is on.
+ * @param {Array} arr The array that is being sorted.
+ * @param {HTMLElement} outputObject The <ul> element to append a line to.
+ */
+function displayArrayUpdate(iteration, arr, outputObject) {
     let newLIne = document.createElement("li");
-    // newLIne.innerHTML = `${text}`;
 
     let iterationLabel = document.createElement("p");
     iterationLabel.innerHTML = `Iteration: ${iteration} Passing: ${isSorted(
@@ -168,7 +193,8 @@ function writeIteration(iteration, arr) {
 
     newLIne.appendChild(iterationLabel);
     newLIne.appendChild(arrayContent);
-    iterationOutput.appendChild(newLIne);
+
+    outputObject.appendChild(newLIne);
 }
 
 /**
@@ -262,12 +288,14 @@ function readySorts() {
     bubbleWL = [...randomList];
     recursiveBubbleWL = [...randomList];
     originalList = [...randomList];
+    quickSortList = [...randomList];
 
     recursiveOutput.innerHTML = "";
     iterationOutput.innerHTML = "";
 
     drawArray(recursiveCanvas, recursiveBubbleWL);
     drawArray(iterationCanvas, bubbleWL);
+    drawArray(quickSortCanvas, quickSortList);
 }
 
 function runSorts() {
@@ -275,6 +303,10 @@ function runSorts() {
 
     recursiveIteration = 0;
     recursiveBubbleSort(recursiveBubbleWL, recursiveBubbleWL.length);
+
+    // quickSortList = quickSort(quickSortList);
+    console.log(quickSort(quickSortList));
+    drawArray(quickSortCanvas, quickSortList);
 }
 
 run();

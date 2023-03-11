@@ -26,19 +26,24 @@
 
 
         <p class="waitSpeedLabel">List Length: <i id="listLength"></i></p>
-        <input type="range" min="2" max="100" value="20" class="slider" id="listLengthSlider"
+        <input type="range" min="2" max="500" value="20" class="slider" id="listLengthSlider"
             oninput="handleSpeedChange()" />
     </div>
     <div class="grid-container">
-        <div class=" grid-child">
+        <div class=" grid-child" hidden>
             <h2>Iterative</h2>
             <canvas id="iterationCanvas" height="400" width="500"> </canvas>
             <ul id="iteration"></ul>
         </div>
-        <div class=" grid-child">
+        <div class=" grid-child" hidden>
             <h2>Recursive</h2>
             <canvas id="recursiveCanvas" height="400" width="500"> </canvas>
             <ul id="recursive"></ul>
+        </div>
+        <div class=" grid-child">
+            <h2>Quick Sort</h2>
+            <canvas id="quickSortCanvas" height="400" width="500"> </canvas>
+            <ul id="quickSort"></ul>
         </div>
     </div>
 
