@@ -1,10 +1,17 @@
-body{
-    background-image: linear-gradient(to right, lightgray, slategray);
+html {
+    height: 100%;
 }
+
+body {
+    height: 100%;
+    background: linear-gradient(70deg, #141e30, #612d2d);
+}
+
 h1,
 h2 {
     text-align: center;
     font-size: 24px;
+    color: white;
 }
 
 h2 {
@@ -30,6 +37,7 @@ canvas {
 
 p {
     margin: 0;
+    color: white;
 }
 
 li {
@@ -48,6 +56,13 @@ li {
 
 .toolbar {
     text-align: center;
+    max-width: fit-content;
+    height: 50px;
+    margin: auto;
+}
+
+.tool-bar-item {
+    margin: 0.35rem;
 }
 
 .grid-container {
@@ -55,7 +70,7 @@ li {
     grid-template-columns: 1fr 1fr;
     max-width: 100%;
     margin: 1vw;
-    
+
 }
 
 .grid-child {
@@ -64,8 +79,20 @@ li {
     margin: auto;
     margin-top: 1vh;
     padding: 1rem;
-    
+
     word-wrap: break-word;
     width: 600px;
 }
 
+.number-input {
+    display: inline;
+    max-width: 100px;
+
+}
+
+
+
+.vertical-separator {
+    border-left: 4px solid slategray;
+    height: 100%;
+}

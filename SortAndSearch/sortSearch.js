@@ -8,10 +8,6 @@ var originalList = [];
 
 var waitTime = 100;
 
-const iterationOutput = document.getElementById("iteration");
-const recursiveOutput = document.getElementById("recursive");
-const recursiveCanvas = document.getElementById("recursiveCanvas");
-const iterationCanvas = document.getElementById("iterationCanvas");
 const quickSortCanvas = document.getElementById("quickSortCanvas");
 const quickSortOutput = document.getElementById("quickSort");
 
@@ -20,66 +16,14 @@ const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
 const listLength = document.getElementById("listLength");
 const listLengthSlider = document.getElementById("listLengthSlider");
 
-window.onload = handleSpeedChange;
+const numberInput = document.getElementById("numberInput");
+const numberInputButton = document.getElementById("numberInputButton");
 
-// *****************************
-// *** Iteration Bubble Sort ***
-// *****************************
+window.onload = handleLengthInput;
 
-async function bubbleSort(arr, n) {
-    var i, j;
-    // Loop over the length of the array.
-    for (i = 0; i < n - 1; i++) {
-        writeIteration(i + 1, arr); // Prints the current state of the list
-        await sleep(waitTime); // Waits to let you see progress
-        // For each iteration loop until the selected item is in the right spot.
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                swap(arr, j, j + 1);
-                drawArray(iterationCanvas, arr, j + 1);
-                await sleep(waitTime);
-            }
-        }
-    }
-}
-
-// *****************************
-// *** Recursive Bubble Sort ***
-// *****************************
-
-var recursiveIteration = 0;
-async function recursiveBubbleSort(arr, n) {
-    // Length of 1:
-    if (n == 1) return;
-
-    var count = 0;
-    // One pass of bubble
-    // sort. After this pass,
-    // the largest element
-    // is moved (or bubbled)
-    // to end.
-    recursiveIteration++;
-    writeRecursive(recursiveIteration, arr);
-
-    for (var i = 0; i < n - 1; i++) {
-        if (arr[i] > arr[i + 1]) {
-            swap(arr, i, i + 1);
-            drawArray(recursiveCanvas, arr, i + 1);
-            await sleep(waitTime);
-            count++;
-        }
-    }
-
-    // Check if any recursion happens or not
-    // If any recursion is not happen then return
-    if (count == 0) return;
-
-    // Largest element is fixed,
-    // recur for remaining array
-    recursiveBubbleSort(arr, n - 1);
-}
-
-// Quick Sort:
+// ******************
+// *** Quick Sort ***
+// ******************
 var quickSortIteration = 0;
 function quickSort(array) {
     quickSortIteration++;
@@ -103,17 +47,97 @@ function quickSort(array) {
     }
 }
 
+// *********************
+// *** Binary Search ***
+// *********************
+
+function binarySearch(arr, low, high, target) {
+    if (high >= low) {
+        let mid = low + Math.floor((high - low) / 2);
+
+        // If the element is present at the middle
+        // itself
+        if (arr[mid] == target) return mid;
+
+        // If element is smaller than mid, then
+        // it can only be present in left subarray
+        if (arr[mid] > target) return binarySearch(arr, low, mid - 1, target);
+
+        // Else the element can only be present
+        // in right subarray
+        return binarySearch(arr, mid + 1, high, target);
+    }
+
+    // We reach here when element is not
+    // present in array
+    return -1;
+}
+
 // ***************
 // *** Helpers ***
 // ***************
 
-function handleSpeedChange() {
-    console.log(waitSpeedSlider.value);
-    waitTime = waitSpeedSlider.value;
-    waitSpeedSliderLabel.innerHTML = waitSpeedSlider.value / 1000;
-
+function handleLengthInput() {
     maxNumber = listLengthSlider.value;
     listLength.innerHTML = maxNumber;
+}
+
+function handleLengthChange() {
+    readySorts();
+}
+
+function handleNumberSearch() {
+    let input = numberInput.value;
+    let affectedElements = [numberInput, numberInputButton];
+    if (isNaN(input)) {
+        handleInvalidInput(affectedElements, "NaN");
+    } else {
+        input = Number(input);
+        if (input <= Number(maxNumber) && input >= 1) {
+            handleValidInput(affectedElements);
+            console.log(input);
+            // Valid input: Search for the number from here.
+            console.log(`quickSortList: ${quickSortList}`);
+            console.log(binarySearch(quickSortList, 0, quickSortList.length, input));
+        } else {
+            handleInvalidInput(affectedElements, "Out of range");
+        }
+    }
+}
+
+function handleInvalidInput(htmlCollection, errorMessage) {
+    console.log(`Please enter a integer from values 1 to ${maxNumber}. ${errorMessage}`);
+    alert(`Please enter a integer from values 1 to ${maxNumber}. ${errorMessage}`);
+
+    htmlCollection.forEach((element) => {
+        setDanger(element);
+    });
+
+    numberInput.value = "";
+}
+
+function handleValidInput(htmlCollection) {
+    htmlCollection.forEach((element) => {
+        setPrimary(element);
+    });
+}
+
+function setPrimary(element) {
+    if (element.classList.contains("is-danger")) {
+        element.classList.remove("is-danger");
+    }
+    if (!element.classList.contains("is-primary")) {
+        element.classList.add("is-primary");
+    }
+}
+
+function setDanger(element) {
+    if (element.classList.contains("is-primary")) {
+        element.classList.remove("is-primary");
+    }
+    if (!element.classList.contains("is-danger")) {
+        element.classList.add("is-danger");
+    }
 }
 
 /**
@@ -131,11 +155,12 @@ function drawArray(canvas, arr, selectedIndex) {
 
         let height = canvas.height;
         let width = canvas.width;
-        let barWidth = 10;
+        let tempWidth = width / arr.length;
+        let barWidth = tempWidth > 0 ? tempWidth : 1;
         let scale = (height - 10) / maxNumber;
         let x = width / arr.length;
 
-        ctx.fillStyle = i == selectedIndex ? "#3477eb" : "#F9DC5C";
+        ctx.fillStyle = i == selectedIndex ? "#3477eb" : "#00D1B2";
         //           x,   y,  width, height
         ctx.fillRect(x * i, height, barWidth, arr[i] * scale * -1);
     }
@@ -153,24 +178,6 @@ function isSorted(arr) {
         }
     }
     return "✔️";
-}
-
-/**
- * Appends a item to the Recursive HTML list.
- * @param {string} text
- * @deprecated Switch to use of displayArrayUpdate instead.
- */
-function writeRecursive(iteration, arr) {
-    displayArrayUpdate(iteration, arr, recursiveOutput);
-}
-
-/**
- * Appends a item to the Iteration HTML list.
- * @param {string} text
- * @deprecated Switch to use of displayArrayUpdate instead.
- */
-function writeIteration(iteration, arr) {
-    displayArrayUpdate(iteration, arr, iterationOutput);
 }
 
 /**
@@ -279,26 +286,15 @@ async function run() {
 function readySorts() {
     numberList = createNumbersList(maxNumber);
     randomList = shuffle(numberList);
-    bubbleWL = [...randomList];
-    recursiveBubbleWL = [...randomList];
-    originalList = [...randomList];
+
     quickSortList = [...randomList];
 
-    recursiveOutput.innerHTML = "";
-    iterationOutput.innerHTML = "";
-
-    drawArray(recursiveCanvas, recursiveBubbleWL);
-    drawArray(iterationCanvas, bubbleWL);
     drawArray(quickSortCanvas, quickSortList);
 }
 
 async function runSorts() {
-    bubbleSort(bubbleWL, bubbleWL.length);
-
-    recursiveIteration = 0;
-    recursiveBubbleSort(recursiveBubbleWL, recursiveBubbleWL.length);
-
     quickSortList = quickSort(quickSortList);
+
     console.log(quickSortList);
     drawArray(quickSortCanvas, quickSortList);
 }

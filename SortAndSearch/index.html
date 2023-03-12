@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search And Sort</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link rel="stylesheet" href="../assets/big ugly.css" />
+
+</head>
+
+<body>
+    <h1 class="has-text-weight-bold is-size-2">Search And Sort</h1>
+    <div class="toolbar level">
+        <button class="button is-rounded tool-bar-item" onclick="readySorts()">Mix</button>
+        <button class="button is-rounded tool-bar-item" onclick="runSorts()">Sort</button>
+        <div class="vertical-separator tool-bar-item"></div>
+        <input class="input is-rounded number-input is-primary tool-bar-item" id="numberInput" type="text"
+            placeholder="Search">
+        <button class="button tool-bar-item is-primary is-rounded" id="numberInputButton"
+            onclick="handleNumberSearch()">Search</button>
+    </div>
+    <div class="slidecontainer">
+        <p class="waitSpeedLabel">List Length: <i id="listLength"></i></p>
+        <input type="range" min="2" max="500" value="20" class="slider" id="listLengthSlider"
+            oninput="handleLengthInput()" onchange="handleLengthChange()" />
+    </div>
+    <div class="columns">
+        <div class="column">
+            <h2 class="has-text-weight-bold">Quick Sort</h2>
+            <canvas id="quickSortCanvas" height="400" width="500"> </canvas>
+            <ul id="quickSort"></ul>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="sortSearch.js"></script>
+</body>
+
+</html>

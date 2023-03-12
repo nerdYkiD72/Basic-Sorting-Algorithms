@@ -1,7 +1,8 @@
-button {
+/* button {
     align-items: center;
     appearance: none;
-    background-color: #c2c2c2;
+    background: #f6f9fe;
+
     border-radius: 24px;
     border-style: none;
     box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
@@ -35,7 +36,7 @@ button {
 }
 
 button:hover {
-    background: #f6f9fe;
+    background-color: #c2c2c2;
     color: #174ea6;
 }
 
@@ -73,7 +74,7 @@ button:not(:disabled):active {
 button:disabled {
     box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
         rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
-}
+} */
 
 /* Slider */
 
@@ -90,7 +91,7 @@ button:disabled {
     width: 100%;
     height: 15px;
     border-radius: 5px;
-    background: #d3d3d3;
+    background: #ffffff;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -103,7 +104,8 @@ button:disabled {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #04AA6D;
+    background: #00D1B2;
+    border-color: transparent;
     cursor: pointer;
 }
 
@@ -111,6 +113,7 @@ button:disabled {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #04AA6D;
+    background: #00D1B2;
+    border-color: transparent;
     cursor: pointer;
 }
