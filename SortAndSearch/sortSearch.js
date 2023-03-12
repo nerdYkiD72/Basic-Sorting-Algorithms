@@ -19,7 +19,10 @@ const listLengthSlider = document.getElementById("listLengthSlider");
 const numberInput = document.getElementById("numberInput");
 const numberInputButton = document.getElementById("numberInputButton");
 
-window.onload = handleLengthInput;
+window.onload = () => {
+    handleLengthInput();
+    handleLengthChange();
+};
 
 // ******************
 // *** Quick Sort ***
@@ -98,7 +101,12 @@ function handleNumberSearch() {
             console.log(input);
             // Valid input: Search for the number from here.
             console.log(`quickSortList: ${quickSortList}`);
-            console.log(binarySearch(quickSortList, 0, quickSortList.length, input));
+
+            let startTime = new Date().getMilliseconds();
+            let results = binarySearch(quickSortList, 0, quickSortList.length, input);
+            let endTime = new Date().getMilliseconds();
+            console.log(`Results: ${results}, Time taken: ${endTime - startTime}`);
+            if (results != -1) drawArray(quickSortCanvas, quickSortList, results);
         } else {
             handleInvalidInput(affectedElements, "Out of range");
         }
@@ -138,6 +146,17 @@ function setDanger(element) {
     if (!element.classList.contains("is-danger")) {
         element.classList.add("is-danger");
     }
+}
+
+/**
+ * Toggle the disabled state of an array of elements.
+ * @param {Array} element The html elements you want to toggle.
+ * @param {Boolean} isDisabled Whether the element should be disabled.
+ */
+function toggleDisabled(elements, disabled) {
+    elements.forEach((element) => {
+        element.disabled = disabled;
+    });
 }
 
 /**
@@ -286,17 +305,20 @@ async function run() {
 function readySorts() {
     numberList = createNumbersList(maxNumber);
     randomList = shuffle(numberList);
-
     quickSortList = [...randomList];
+
+    // Disable searching for a number until the list is sorted.
+    toggleDisabled([numberInput, numberInputButton], true);
 
     drawArray(quickSortCanvas, quickSortList);
 }
 
-async function runSorts() {
+function runSorts() {
     quickSortList = quickSort(quickSortList);
 
-    console.log(quickSortList);
+    console.log("Array Sorted.");
     drawArray(quickSortCanvas, quickSortList);
+    toggleDisabled([numberInput, numberInputButton], false);
 }
 
 run();

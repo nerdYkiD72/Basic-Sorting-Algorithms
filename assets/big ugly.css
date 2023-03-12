@@ -82,7 +82,8 @@ button:disabled {
     width: 50%;
     text-align: center;
     margin: auto;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
+    margin-bottom: 1rem;
     /* Width of the outside container */
 }
 

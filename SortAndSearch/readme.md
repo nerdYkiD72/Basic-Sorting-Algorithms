@@ -16,8 +16,9 @@
     -   Make buttons disabled when they need to be
     -   Add and style buttons for switching between sites
     -   Fix original bubble sorting site
+    -   Fix search results card
 -   Code:
-    -   Implement search algorithm (binary search ??)
+    -   ✔️ Implement search algorithm (binary search ??)
     -   Clean and comment
 -   Overall:
 
