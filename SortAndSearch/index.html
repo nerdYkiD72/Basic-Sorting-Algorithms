@@ -40,7 +40,7 @@
         <div class="search-card ">
             <p id="searchResults">Search empty</p>
             <p>Item found at location: <i id="searchLocation">0</i></p>
-            <!-- <p>Time taken to find: <i id="searchTime">0</i> sec</p> -->
+            <p>List type: <i id="listTypeLabel">0</i></p>
         </div>
         <div class="columns">
             <div class="column">
@@ -59,13 +59,21 @@
 
         <div class="cd-panel__container">
             <div class="cd-panel__content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam magnam accusamus obcaecati nisi
-                    eveniet quo veniam quibusdam veritatis autem accusantium doloribus nam mollitia maxime explicabo
-                    nemo quae aspernatur impedit cupiditate dicta molestias consectetur, sint reprehenderit maiores.
-                    Tempora, exercitationem, voluptate. Sapiente modi officiis nulla sed ullam, amet placeat, illum
-                    necessitatibus, eveniet dolorum et maiores earum tempora, quas iste perspiciatis quibusdam vero
-                    accusamus veritatis. acilis obcaecati et id, corporis accusamus? Ab porro fuga consequatur quisquam
-                    illo quae quas tenetur.</p>
+                <div class="control">
+                    <p>List Type</p>
+                    <label class="radio">
+                        <input id="consecutiveEnabled" type="radio" name="rsvp" onchange="handleListTypeChange()">
+                        Consecutive
+                    </label>
+                    <label class="radio">
+                        <input id="randomEnabled" type="radio" name="rsvp" onchange="handleListTypeChange()">
+                        Random
+                    </label>
+                </div>
+
+                <p class="waitSpeedLabel">List Max Variation</p>
+                <input type="range" min="0" max="50" value="20" class="slider" id="listMaxVariation" oninput=""
+                    onchange="handleMaxVariationChange()" />
 
             </div> <!-- cd-panel__content -->
         </div> <!-- cd-panel__container -->

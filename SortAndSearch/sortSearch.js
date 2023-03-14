@@ -5,6 +5,8 @@ var bubbleWL = [];
 var recursiveBubbleWL = [];
 var quickSortList = [];
 var originalList = [];
+var listTypeConsecutive = true;
+var listMaxVariation = 0;
 
 var waitTime = 100;
 
@@ -13,8 +15,9 @@ const quickSortOutput = document.getElementById("quickSort");
 
 const waitSpeedSlider = document.getElementById("waitSpeedSlider");
 const waitSpeedSliderLabel = document.getElementById("waitSpeedNumber");
-const listLength = document.getElementById("listLength");
+const listLengthElement = document.getElementById("listLength");
 const listLengthSlider = document.getElementById("listLengthSlider");
+var listLength = 0;
 
 const numberInput = document.getElementById("numberInput");
 const numberInputButton = document.getElementById("numberInputButton");
@@ -22,9 +25,16 @@ const numberInputButton = document.getElementById("numberInputButton");
 const searchResults = document.getElementById("searchResults");
 const searchLocation = document.getElementById("searchLocation");
 
+const consecutiveEnabled = document.getElementById("consecutiveEnabled");
+const randomEnabled = document.getElementById("randomEnabled");
+const listMaxVariationElement = document.getElementById("listMaxVariation");
+const listTypeLabel = document.getElementById("listTypeLabel");
+
 window.onload = () => {
     handleLengthInput();
     handleLengthChange();
+    handleMaxVariationChange();
+    handleListTypeChange();
 };
 
 // ******************
@@ -83,9 +93,29 @@ function binarySearch(arr, low, high, target) {
 // *** Helpers ***
 // ***************
 
+function handleListTypeChange() {
+    listTypeConsecutive = consecutiveEnabled.checked;
+
+    if (listTypeConsecutive) {
+        listTypeLabel.innerHTML = "Consecutive";
+    } else {
+        listTypeLabel.innerHTML = `Random, Variation: ${listMaxVariation}`;
+    }
+}
+
+function handleMaxVariationChange() {
+    listMaxVariation = listMaxVariationElement.value;
+
+    if (listTypeConsecutive) {
+        listTypeLabel.innerHTML = "Consecutive";
+    } else {
+        listTypeLabel.innerHTML = `Random, Variation: ${listMaxVariation}`;
+    }
+}
+
 function handleLengthInput() {
-    maxNumber = listLengthSlider.value;
-    listLength.innerHTML = maxNumber;
+    listLength = listLengthSlider.value;
+    listLengthElement.innerHTML = listLength;
 }
 
 function handleLengthChange() {
@@ -95,6 +125,7 @@ function handleLengthChange() {
 function handleNumberSearch() {
     let input = numberInput.value;
     let affectedElements = [numberInput, numberInputButton];
+
     if (isNaN(input)) {
         handleInvalidInput(affectedElements, "NaN");
     } else {
@@ -107,9 +138,14 @@ function handleNumberSearch() {
             let results = binarySearch(quickSortList, 0, quickSortList.length, input);
 
             console.log(`Results: ${results}`);
-            searchResults.innerHTML = "Item found";
-            searchLocation.innerHTML = results;
-            if (results != -1) drawArray(quickSortCanvas, quickSortList, results);
+            if (results != -1) {
+                searchResults.innerHTML = "✔️ Item found ✔️";
+                searchLocation.innerHTML = results;
+                drawArray(quickSortCanvas, quickSortList, results);
+            } else {
+                searchResults.innerHTML = "❌ Item not in list. ❌";
+                searchLocation.innerHTML = "";
+            }
         } else {
             handleInvalidInput(affectedElements, "Out of range");
         }
@@ -225,7 +261,7 @@ function drawArray(canvas, arr, selectedIndex) {
         let width = canvas.width;
         let tempWidth = width / arr.length;
         let barWidth = tempWidth > 0 ? tempWidth : 1;
-        let scale = (height - 10) / maxNumber;
+        let scale = (height - 10) / findLargestNumber(arr);
         let x = width / arr.length;
 
         ctx.fillStyle = i == selectedIndex ? "#3477eb" : "#00D1B2";
@@ -246,6 +282,12 @@ function isSorted(arr) {
         }
     }
     return "✔️";
+}
+
+function findLargestNumber(arr) {
+    let thisSortedArray = quickSort(arr);
+
+    return thisSortedArray[thisSortedArray.length - 1];
 }
 
 /**
@@ -333,13 +375,27 @@ function sleep(ms) {
     }
 }
 
-function createNumbersList(max) {
+function createNumbersList(max, consecutive, delta = 1) {
     let arr = [];
 
-    for (let i = 0; i < max; i++) {
-        arr.push(i + 1);
+    if (consecutive) {
+        for (let i = 0; i < max; i++) {
+            arr.push(i + 1);
+        }
+        return arr;
+    } else {
+        arr.push(getRndInteger(0, delta));
+        for (let i = 0; i < max; i++) {
+            arr.push(arr[i] + getRndInteger(1, delta));
+        }
+
+        console.log(`Array Made: ${arr}, Random integer: ${getRndInteger(1, delta)}`);
+        return arr;
     }
-    return arr;
+}
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // ***************
@@ -352,13 +408,15 @@ async function run() {
 }
 
 function readySorts() {
-    numberList = createNumbersList(maxNumber);
+    console.log(listTypeConsecutive);
+    numberList = createNumbersList(listLength, listTypeConsecutive, listMaxVariation);
     randomList = shuffle(numberList);
     quickSortList = [...randomList];
 
     // Disable searching for a number until the list is sorted.
     toggleDisabled([numberInput, numberInputButton], true);
 
+    maxNumber = findLargestNumber(quickSortList);
     drawArray(quickSortCanvas, quickSortList);
 }
 
