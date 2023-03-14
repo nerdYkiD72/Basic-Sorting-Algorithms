@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search And Sort</title>
+    <script src="https://kit.fontawesome.com/4cb6af3c2f.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="../assets/styles.css" />
     <link rel="stylesheet" href="../assets/big ugly.css" />
@@ -13,33 +14,64 @@
 </head>
 
 <body>
-    <h1 class="has-text-weight-bold is-size-2">Search And Sort</h1>
-    <div class="toolbar level">
-        <button class="button is-rounded tool-bar-item" onclick="readySorts()">Mix</button>
-        <button class="button is-rounded tool-bar-item" onclick="runSorts()">Sort</button>
-        <div class="vertical-separator tool-bar-item"></div>
-        <input class="input is-rounded number-input is-primary tool-bar-item" id="numberInput" type="text"
-            placeholder="Search">
-        <button class="button tool-bar-item is-primary is-rounded" id="numberInputButton"
-            onclick="handleNumberSearch()">Search</button>
-    </div>
-    <div class="slidecontainer">
-        <p class="waitSpeedLabel">List Length: <i id="listLength"></i></p>
-        <input type="range" min="2" max="500" value="20" class="slider" id="listLengthSlider"
-            oninput="handleLengthInput()" onchange="handleLengthChange()" />
-    </div>
-    <div class="search-card ">
-        <p id="searchResults">Search empty</p>
-        <p>Item found at location: <i id="searchLocation">0</i></p>
-        <p>Time taken to find: <i id="searchTime">0</i> sec</p>
-    </div>
-    <div class="columns">
-        <div class="column">
-            <h2 class="has-text-weight-bold">Quick Sort</h2>
-            <canvas id="quickSortCanvas" height="400" width="500"> </canvas>
-            <ul id="quickSort"></ul>
+    <a href="#0" class="js-cd-panel-trigger fa-solid fa-gear is-size-3 has-text-white settings-gear"
+        data-panel="main"></a>
+    <!-- your content here -->
+    <!-- Settings -->
+
+
+    <!-- SITE -->
+    <main class="main">
+        <h1 class="has-text-weight-bold is-size-2">Search And Sort</h1>
+        <div class="toolbar level">
+            <button class="button is-rounded tool-bar-item" onclick="readySorts()">Mix</button>
+            <button class="button is-rounded tool-bar-item" onclick="runSorts()">Sort</button>
+            <div class="vertical-separator tool-bar-item"></div>
+            <input class="input is-rounded number-input is-primary tool-bar-item" id="numberInput" type="text"
+                placeholder="Search" oninput="handleNumberSearchInput()">
+            <button class="button tool-bar-item is-primary is-rounded" id="numberInputButton"
+                onclick="handleNumberSearch()">Search</button>
         </div>
-    </div>
+        <div class="slidecontainer">
+            <p class="waitSpeedLabel">List Length: <i id="listLength"></i></p>
+            <input type="range" min="2" max="500" value="20" class="slider" id="listLengthSlider"
+                oninput="handleLengthInput()" onchange="handleLengthChange()" />
+        </div>
+        <div class="search-card ">
+            <p id="searchResults">Search empty</p>
+            <p>Item found at location: <i id="searchLocation">0</i></p>
+            <!-- <p>Time taken to find: <i id="searchTime">0</i> sec</p> -->
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h2 class="has-text-weight-bold">Quick Sort</h2>
+                <canvas id="quickSortCanvas" height="400" width="500"> </canvas>
+                <ul id="quickSort"></ul>
+            </div>
+        </div>
+    </main>
+
+    <div class="cd-panel cd-panel--from-right js-cd-panel-main">
+        <header class="cd-panel__header">
+            <h1>Settings</h1>
+            <a href="#0" class="cd-panel__close js-cd-close">Close</a>
+        </header>
+
+        <div class="cd-panel__container">
+            <div class="cd-panel__content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam magnam accusamus obcaecati nisi
+                    eveniet quo veniam quibusdam veritatis autem accusantium doloribus nam mollitia maxime explicabo
+                    nemo quae aspernatur impedit cupiditate dicta molestias consectetur, sint reprehenderit maiores.
+                    Tempora, exercitationem, voluptate. Sapiente modi officiis nulla sed ullam, amet placeat, illum
+                    necessitatibus, eveniet dolorum et maiores earum tempora, quas iste perspiciatis quibusdam vero
+                    accusamus veritatis. acilis obcaecati et id, corporis accusamus? Ab porro fuga consequatur quisquam
+                    illo quae quas tenetur.</p>
+
+            </div> <!-- cd-panel__content -->
+        </div> <!-- cd-panel__container -->
+    </div> <!-- cd-panel -->
+    <script src="slideout.js"></script> <!-- Resource JavaScript -->
+
 
     <script type="text/javascript" src="sortSearch.js"></script>
 </body>

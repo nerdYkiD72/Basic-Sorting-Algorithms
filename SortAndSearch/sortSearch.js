@@ -19,6 +19,9 @@ const listLengthSlider = document.getElementById("listLengthSlider");
 const numberInput = document.getElementById("numberInput");
 const numberInputButton = document.getElementById("numberInputButton");
 
+const searchResults = document.getElementById("searchResults");
+const searchLocation = document.getElementById("searchLocation");
+
 window.onload = () => {
     handleLengthInput();
     handleLengthChange();
@@ -100,12 +103,12 @@ function handleNumberSearch() {
             handleValidInput(affectedElements);
             console.log(input);
             // Valid input: Search for the number from here.
-            console.log(`quickSortList: ${quickSortList}`);
 
-            let startTime = new Date().getMilliseconds();
             let results = binarySearch(quickSortList, 0, quickSortList.length, input);
-            let endTime = new Date().getMilliseconds();
-            console.log(`Results: ${results}, Time taken: ${endTime - startTime}`);
+
+            console.log(`Results: ${results}`);
+            searchResults.innerHTML = "Item found";
+            searchLocation.innerHTML = results;
             if (results != -1) drawArray(quickSortCanvas, quickSortList, results);
         } else {
             handleInvalidInput(affectedElements, "Out of range");
@@ -113,13 +116,55 @@ function handleNumberSearch() {
     }
 }
 
+function handleNumberSearchInput() {
+    let input = numberInput.value;
+    let affectedElements = [numberInput, numberInputButton];
+
+    if (isNaN(input)) {
+        affectedElements.forEach((element) => {
+            setDanger(element);
+        });
+    } else {
+        input = Number(input);
+        if (input <= Number(maxNumber) && input >= 1) {
+            affectedElements.forEach((element) => {
+                setPrimary(element);
+            });
+        } else {
+            affectedElements.forEach((element) => {
+                setDanger(element);
+            });
+        }
+    }
+    if (input == "") {
+        affectedElements.forEach((element) => {
+            setPrimary(element);
+        });
+    }
+}
+
+numberInput.addEventListener("keypress", function (event) {
+    // If the user presses the "Enter" key on the keyboard
+    console.log(event.key);
+    if (event.key == "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        handleNumberSearch();
+    }
+});
+
 function handleInvalidInput(htmlCollection, errorMessage) {
     console.log(`Please enter a integer from values 1 to ${maxNumber}. ${errorMessage}`);
     alert(`Please enter a integer from values 1 to ${maxNumber}. ${errorMessage}`);
 
+    searchResults.innerHTML = errorMessage;
+
     htmlCollection.forEach((element) => {
-        setDanger(element);
+        setPrimary(element);
     });
+
+    searchLocation.innerHTML = "";
 
     numberInput.value = "";
 }
@@ -128,6 +173,10 @@ function handleValidInput(htmlCollection) {
     htmlCollection.forEach((element) => {
         setPrimary(element);
     });
+}
+
+function handleSettingsClick() {
+    console.log("Settings clicked");
 }
 
 function setPrimary(element) {

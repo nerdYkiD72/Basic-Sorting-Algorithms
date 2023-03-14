@@ -48,6 +48,11 @@ li {
     color: white;
 }
 
+button,
+input {
+    z-index: 0;
+}
+
 .waitSpeedLabel {
     margin: 1rem;
     color: white;
@@ -61,6 +66,7 @@ li {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0 !important;
+    z-index: 0;
 }
 
 .tool-bar-item {
@@ -97,6 +103,7 @@ li {
 .vertical-separator {
     border-left: 4px solid slategray;
     height: 100%;
+    display: inline-block;
 }
 
 .search-card {
@@ -109,5 +116,53 @@ li {
     color: black !important;
     font-weight: 500;
     border-radius: 1rem;
-    ;
 }
+
+.top-right {
+    position: absolute;
+    /* top: 10px;
+    right: 10px; */
+}
+
+.settings-gear {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.main {
+    z-index: 1 !important;
+}
+
+/* #slideout {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+#slideout_inner {
+    position: fixed;
+    top: 40px;
+    left: -250px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+
+    background-color: rgba(255, 255, 255, 0.4);
+    height: 100%;
+    width: 100%;
+}
+
+#slideout:hover {
+    left: 250px;
+    color: red !important;
+}
+
+#slideout:hover #slideout_inner {
+    left: 0;
+} */
